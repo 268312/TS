@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/minty/bootstrap.min.css">
+        <style>
+        .container {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Moja Strona</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Strona główna</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">O nas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Usługi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Kontakt</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form class="form-signin" action="/action_page.php">
+                <h2 class="mb-3">Zaloguj się</h2>
+                <div class="form-group">
+                    <label for="login" class="sr-only">Login</label>
+                    <input type="text" id="login" class="form-control" placeholder="Login" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="haslo" class="sr-only">Hasło</label>
+                    <input type="password" id="haslo" class="form-control" placeholder="Hasło" required>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj się</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
