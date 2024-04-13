@@ -54,10 +54,19 @@ public class LoanController {
         return ResponseEntity.noContent().build();
     }
 
+
     @Secured("ROLE_ADMIN")
     @GetMapping("/all")
     public ResponseEntity<List<LoanEntity>> getAllLoans() {
         List<LoanEntity> loans = loanService.getAllLoans();
         return ResponseEntity.ok(loans);
     }
+
+    @Secured("ROLE_READER")
+    @GetMapping("/history/{userId}")
+    public ResponseEntity<List<LoanEntity>> getLoanHistory(@PathVariable Integer userId) {
+        List<LoanEntity> loanHistory = loanService.getLoanHistory(userId);
+        return ResponseEntity.ok(loanHistory);
+    }
 }
+

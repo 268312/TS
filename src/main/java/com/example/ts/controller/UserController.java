@@ -51,6 +51,7 @@ public class UserController {
         userService.delete(id);
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/get/{id}")
     public @ResponseBody UserEntity getUser(@PathVariable Integer id){
         return userService.get(id);
