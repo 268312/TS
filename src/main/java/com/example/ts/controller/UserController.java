@@ -36,12 +36,16 @@ public class UserController {
     @Secured("ROLE_ADMIN")
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public @ResponseBody ResponseEntity<?> addUser(@RequestBody UserEntity user){
-        if (userService.existsByUsername(user.getName())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
+    public @ResponseBody ResponseEntity<?> addUser(@RequestBody UserEntity user) {
+        try {
+            if (userService.existsByUsername(user.getName())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
+            }
+            UserEntity addedUser = userService.addUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(addedUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add user: " + e.getMessage());
         }
-        UserEntity addedUser = userService.addUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(addedUser);
     }
 
     @Secured("ROLE_ADMIN")
