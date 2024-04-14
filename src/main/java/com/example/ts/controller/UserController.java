@@ -50,15 +50,29 @@ public class UserController {
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/delete/{id}")
-    public @ResponseBody void deleteUser(@PathVariable Integer id){
-
-        userService.delete(id);
+    public @ResponseBody ResponseEntity<?> deleteUser(@PathVariable Integer id){
+        try {
+            userService.delete(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete user: " + e.getMessage());
+        }
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/get/{id}")
-    public @ResponseBody UserEntity getUser(@PathVariable Integer id){
-        return userService.get(id);
+    public @ResponseBody ResponseEntity<?> getUser(@PathVariable Integer id){
+        try {
+            UserEntity user = userService.get(id);
+            if (user != null) {
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Faild to get user: " + e.getMessage());
+        }
+
     }
 
     @Secured("ROLE_READER")
