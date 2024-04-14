@@ -90,17 +90,24 @@ public class UserController {
     @Secured("ROLE_READER")
     @PostMapping("/return/{loanId}")
     public ResponseEntity<?> returnBook(@PathVariable Integer loanId) {
-        // Wywołaj serwis, aby zwrócić książkę
-        loanService.returnBook(loanId);
-        return ResponseEntity.ok().build();
+        try {
+            loanService.returnBook(loanId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to return book: " + e.getMessage());
+        }
     }
+
 
     @Secured("ROLE_READER")
     @GetMapping("/history/{userId}")
     public ResponseEntity<?> getLoanHistory(@PathVariable Integer userId) {
-        // Wywołaj serwis, aby pobrać historię wypożyczeń
-        List<LoanEntity> loanHistory = loanService.getLoanHistory(userId);
-        return ResponseEntity.ok(loanHistory);
+        try {
+            List<LoanEntity> loanHistory = loanService.getLoanHistory(userId);
+            return ResponseEntity.ok(loanHistory);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get loan history: " + e.getMessage());
+        }
     }
 }
 
