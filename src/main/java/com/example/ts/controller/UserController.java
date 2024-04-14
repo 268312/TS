@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+/**
+ * Controller class for handling operations related to users
+ */
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -26,6 +28,12 @@ public class UserController {
 
     private final LoanService loanService;
 
+    /**
+     * Constructor for UserController
+     * @param userService The service for handling user operations
+     * @param loanService The service for handling loan operations
+     * @param passwordEncoder The password encoder for encoding user passwords
+     */
     @Autowired
     public UserController(UserService userService, LoanService loanService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
@@ -33,6 +41,12 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+    /**
+     * Adding a new user
+     * @param user The user to be added
+     * @return ResponseEntity containing the added user
+     */
     @Secured("ROLE_ADMIN")
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -48,6 +62,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Deleting a user by id
+     * @param id The id of the user to delete
+     * @return ResponseEntity indicating the result of the deletion
+     */
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/delete/{id}")
     public @ResponseBody ResponseEntity<?> deleteUser(@PathVariable Integer id){
@@ -59,6 +78,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Retrieving a user by id
+     * @param id the id of the user to be retrieved
+     * @return ResponseEntity containing the retrieved user
+     */
     @Secured("ROLE_ADMIN")
     @GetMapping("/get/{id}")
     public @ResponseBody ResponseEntity<?> getUser(@PathVariable Integer id){
@@ -75,6 +99,12 @@ public class UserController {
 
     }
 
+    /**
+     * Borrowing a book
+     * @param userId the id of the user borrowing the book
+     * @param bookId the id of the book being borrowed
+     * @return ResponseEntity containing the loan
+     */
     @Secured("ROLE_READER")
     @PostMapping("/borrow/{userId}/{bookId}")
     public ResponseEntity<?> borrowBook(@PathVariable Integer userId, @PathVariable Integer bookId) {
@@ -87,6 +117,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Returning a book
+     * @param loanId The id of the loan to return
+     * @return ResponseEntity indicating the result of the return operation
+     */
     @Secured("ROLE_READER")
     @PostMapping("/return/{loanId}")
     public ResponseEntity<?> returnBook(@PathVariable Integer loanId) {
@@ -99,6 +134,11 @@ public class UserController {
     }
 
 
+    /**
+     * Retrieving loan history for a user
+     * @param userId The id of the user
+     * @return ResponseEntity containing the list of loans
+     */
     @Secured("ROLE_READER")
     @GetMapping("/history/{userId}")
     public ResponseEntity<?> getLoanHistory(@PathVariable Integer userId) {

@@ -8,16 +8,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller class for handling operations related to books
+ */
 @RestController
 @RequestMapping("/api/book")
 public class BookController {
     private final BookService bookService;
 
+    /**
+     * Constructor for BookController
+     * @param bookService The service for handling book operations
+     */
     @Autowired
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
+    /**
+     * Adding a new book
+     * @param book The book to add
+     * @return ResponseEntity containing the added book
+     */
     @Secured("ROLE_ADMIN")
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -30,7 +42,10 @@ public class BookController {
         }
     }
 
-
+    /**
+     * Retrieving all books
+     * @return ResponseEntity containing a list of all books
+     */
     @GetMapping("/getAll")
     public @ResponseBody ResponseEntity<?> getAllBooks(){
         try {
@@ -41,6 +56,11 @@ public class BookController {
         }
     }
 
+    /**
+     * Retrieving a book
+     * @param id the id of the book to be retrieved
+     * @return ResponseEntity containing the book
+     */
     @GetMapping("/getOne/{id}")
     public @ResponseBody ResponseEntity<?> getOne(@PathVariable Integer id){
         try {
@@ -55,6 +75,11 @@ public class BookController {
         }
     }
 
+    /**
+     * Deleting a book
+     * @param id the id of the book to be deleted
+     * @return ResponseEntity indicating the result of the deletion
+     */
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/delete/{id}")
     public @ResponseBody ResponseEntity<?> delete(@PathVariable Integer id){
