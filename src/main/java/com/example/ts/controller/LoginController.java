@@ -9,15 +9,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for handling user login operations.
+ */
 @RestController
 public class LoginController {
     private final LoginService loginService;
 
+    /**
+     * Constructor for LoginController
+     * @param loginService The service for handling user login operations
+     */
     @Autowired
     public LoginController(LoginService loginService){
         this.loginService = loginService;
     }
 
+    /**
+     * Logging in
+     * @param login The login entity containing user credentials
+     * @return ResponseEntity containing the authentication token if login is successful
+     */
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginEntity login){
         String token = loginService.userLogin(login);
