@@ -10,16 +10,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller class for handling operations related to loans in library
+ */
+
 @RestController
 @RequestMapping("/api/loan")
 public class LoanController {
     private final LoanService loanService;
 
+    /**
+     * Constructor for LoanController
+     * @param loanService The service for handling operations related to loans
+     */
     @Autowired
     public LoanController(LoanService loanService){
         this.loanService = loanService;
     }
 
+    /**
+     * Adding a new loan
+     * @param loan The loan entity to add
+     * @return ResponseEntity containing the added loan entity
+     */
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public @ResponseBody ResponseEntity<?> addLoan(@RequestBody LoanEntity loan){
@@ -32,6 +45,11 @@ public class LoanController {
     }
 
 
+    /**
+     * Retrieving a loan
+     * @param id The id of a loan to be retrieved
+     * @return ResponseEntity containing the loan with given id
+     */
     @Secured("ROLE_ADMIN")
     @GetMapping("/get/{id}")
     public @ResponseBody ResponseEntity<?> getOne(@PathVariable Integer id){
@@ -47,6 +65,11 @@ public class LoanController {
         }
     }
 
+    /**
+     * Deleting a loan
+     * @param id The id of the loan to be deleted
+     * @return ResponseEntity indicating the result of the deletion
+     */
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/delete/{id}")
     public @ResponseBody ResponseEntity<?> delete(@PathVariable Integer id){
@@ -58,6 +81,12 @@ public class LoanController {
         }
     }
 
+    /**
+     * Borrowing a book
+     * @param userId the id of the user borrowing a book
+     * @param bookId the id of the borrowed book
+     * @return ResponseEntity containing the loan that was created
+     */
     @Secured("ROLE_READER")
     @PostMapping("/borrow")
     @ResponseStatus(HttpStatus.CREATED)
@@ -70,6 +99,11 @@ public class LoanController {
         }
     }
 
+    /**
+     * Returning a book
+     * @param id id of the returned book
+     * @return ResponseEntity indicating the result of the return
+     */
     @Secured("ROLE_READER")
     @DeleteMapping("/return/{id}")
     public ResponseEntity<?> returnBook(@PathVariable Integer id) {
@@ -82,6 +116,10 @@ public class LoanController {
     }
 
 
+    /**
+     * Getting all loans
+     * @return ResponseEntity containing a list with all the loans
+     */
     @Secured("ROLE_ADMIN")
     @GetMapping("/all")
     public ResponseEntity<?> getAllLoans() {
@@ -93,6 +131,12 @@ public class LoanController {
         }
     }
 
+
+    /**
+     * Getting loan history for a particular user
+     * @param userId the id of the user
+     * @return ResponseEntity containing the list of loans made by the user
+     */
     @Secured("ROLE_READER")
     @GetMapping("/history/{userId}")
     public ResponseEntity<?> getLoanHistory(@PathVariable Integer userId) {
