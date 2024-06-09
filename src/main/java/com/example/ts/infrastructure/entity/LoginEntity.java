@@ -1,7 +1,5 @@
 package com.example.ts.infrastructure.entity;
 
-package com.example.ts.infrastructure.entity;
-
 import com.example.ts.roles.UserRole;
 import jakarta.persistence.*;
 
@@ -15,7 +13,8 @@ public class LoginEntity {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    @OneToOne(mappedBy = "login", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
     public String getPassword() {

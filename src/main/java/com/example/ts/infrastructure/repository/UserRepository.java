@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
-    boolean existsByUsername(String username);
+    boolean existsByName(String Name);
 }

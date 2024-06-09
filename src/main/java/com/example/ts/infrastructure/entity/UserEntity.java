@@ -1,6 +1,9 @@
 package com.example.ts.infrastructure.entity;
 
+import com.example.ts.roles.UserRole;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user", schema = "ksiazki")
@@ -8,7 +11,6 @@ public class UserEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Integer id;
 
     @Basic
@@ -19,9 +21,6 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-//    @Column(name = "role")
- //   private UserRole role;
-
     @Basic
     @Column(name = "email")
     private String email;
@@ -29,8 +28,12 @@ public class UserEntity {
     @Basic
     @Column(name = "full_name")
     private String fullName;
-    // @OneToMany(mappedBy = "user")
-    // private List<Loan> loans;
+
+    @OneToMany(mappedBy = "user")
+    private List<LoanEntity> loans;
+
+//    @OneToOne
+//    private LoginEntity login;
 
     public Integer getId() {
         return id;
@@ -75,7 +78,4 @@ public class UserEntity {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private LoginEntity login;
 }

@@ -20,11 +20,11 @@ public class LoanEntity {
     private BookEntity book;
 
     @Basic
-    @Column(name = "loan_date")
+    @Column(name = "loan_date", nullable = false)
     private Date loanDate;
 
     @Basic
-    @Column(name = "due_date")
+    @Column(name = "due_date", nullable = false)
     private Date dueDate;
     @Basic
     @Column(name = "return_date")
@@ -51,10 +51,6 @@ public class LoanEntity {
         return book;
     }
 
-    public void setBook(Optional<BookEntity> book) {
-        this.book = book;
-    }
-
     public Date getLoanDate() {
         return loanDate;
     }
@@ -77,5 +73,9 @@ public class LoanEntity {
 
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public void setBook(BookEntity book) {
+        this.book = book;
     }
 }

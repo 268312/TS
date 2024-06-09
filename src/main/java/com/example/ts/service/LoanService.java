@@ -1,5 +1,6 @@
 package com.example.ts.service;
 
+import com.example.ts.infrastructure.entity.BookEntity;
 import com.example.ts.infrastructure.entity.LoanEntity;
 import com.example.ts.infrastructure.entity.UserEntity;
 import com.example.ts.infrastructure.repository.BookRepository;
@@ -40,8 +41,9 @@ public class LoanService {
         LoanEntity loan = new LoanEntity();
         loan.setUser(user);
         loan.setLoanDate(new Date(System.currentTimeMillis()));
+        BookEntity book = bookRepository.findById(bookId).orElse(null);
         // Ustawienie książki (bookId przekazywane z żądania)
-        loan.setBook(bookRepository.findById(bookId));
+        loan.setBook(book);
         return loanRepository.save(loan);
     }
     public void returnBook(Integer loanId) {
