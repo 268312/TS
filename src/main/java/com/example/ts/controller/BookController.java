@@ -5,14 +5,15 @@ import com.example.ts.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
+//import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller class for handling operations related to books
  */
 @RestController
-@RequestMapping("/api/book")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/books")
 public class BookController {
     private final BookService bookService;
 
@@ -30,7 +31,7 @@ public class BookController {
      * @param book The book to add
      * @return ResponseEntity containing the added book
      */
-    @Secured("ROLE_ADMIN")
+//    @Secured("ROLE_ADMIN")
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public @ResponseBody ResponseEntity<?> addBook(@RequestBody BookEntity book){
@@ -80,7 +81,7 @@ public class BookController {
      * @param id the id of the book to be deleted
      * @return ResponseEntity indicating the result of the deletion
      */
-    @Secured("ROLE_ADMIN")
+//    @Secured("ROLE_ADMIN")
     @DeleteMapping("/delete/{id}")
     public @ResponseBody ResponseEntity<?> delete(@PathVariable Integer id){
         try {
