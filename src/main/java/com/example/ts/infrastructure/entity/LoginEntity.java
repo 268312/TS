@@ -48,4 +48,12 @@ public class LoginEntity {
     public UserRole getRole() {
         return role;
     }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 }
