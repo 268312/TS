@@ -36,10 +36,21 @@ public class SecurityConfig {
                                 authorizationManagerRequestMatcherRegistry
 //                                        .requestMatchers("/login").permitAll()     //kazdy moze dojsc do logowania
                                         //.requestMatchers("/book").hasRole("USER") //przykład
-                                        .requestMatchers("/book").permitAll()
+                                        //books
+                                        .requestMatchers("/api/books/getAll").permitAll()
+                                        .requestMatchers("/api/books/add").hasRole("ADMIN")
+                                        .requestMatchers("/api/books/delete").permitAll()
+                                        //auth
                                         .requestMatchers("/auth/register").permitAll()
                                         .requestMatchers("/auth/login").permitAll()
+                                        //
                                         .requestMatchers("/home").hasRole("ADMIN")
+                                        //loans
+                                        .requestMatchers("/api/loan/all").hasRole("ADMIN")
+                                        .requestMatchers("/api/loan/borrow").hasRole("ADMIN")
+                                        //user
+                                        .requestMatchers("/api/user/getAll").hasRole("ADMIN")
+
                 )
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

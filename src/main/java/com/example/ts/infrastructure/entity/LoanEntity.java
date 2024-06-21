@@ -9,6 +9,7 @@ import java.util.Optional;
 @Table(name = "loan", schema = "ksiazki")
 public class LoanEntity {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @ManyToOne

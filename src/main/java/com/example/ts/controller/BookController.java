@@ -1,5 +1,7 @@
 package com.example.ts.controller;
 
+import com.example.ts.controller.dto.BOOK.DeleteBookDto;
+import com.example.ts.controller.dto.BOOK.GetBookDto;
 import com.example.ts.infrastructure.entity.BookEntity;
 import com.example.ts.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 
 /**
  * Controller class for handling operations related to books
@@ -32,7 +35,7 @@ public class BookController {
      * @param book The book to add
      * @return ResponseEntity containing the added book
      */
-//    @Secured("ROLE_ADMIN")
+
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public @ResponseBody ResponseEntity<?> addBook(@RequestBody BookEntity book){
@@ -52,7 +55,7 @@ public class BookController {
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody ResponseEntity<?> getAllBooks(){
         try {
-            Iterable<BookEntity> allBooks = bookService.getAllBooks();
+            Iterable<GetBookDto> allBooks = bookService.getAllBooks();
             return ResponseEntity.ok(allBooks);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to retrieve books: " + e.getMessage());
@@ -80,14 +83,15 @@ public class BookController {
 
     /**
      * Deleting a book
-     * @param id the id of the book to be deleted
+     * @param deleteBookDto the id of the book to be deleted
      * @return ResponseEntity indicating the result of the deletion
      */
 //    @Secured("ROLE_ADMIN")
-    @DeleteMapping("/delete/{id}")
-    public @ResponseBody ResponseEntity<?> delete(@PathVariable Integer id){
+    @DeleteMapping("/delete")
+    public @ResponseBody ResponseEntity<?> delete(@RequestBody DeleteBookDto deleteBookDto){
         try {
-            bookService.delete(id);
+            Integer bookId = deleteBookDto.getBookId();
+            bookService.delete(bookId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book: " + e.getMessage());

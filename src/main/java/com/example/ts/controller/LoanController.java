@@ -1,5 +1,6 @@
 package com.example.ts.controller;
 
+import com.example.ts.controller.dto.loan.AddLoanDto;
 import com.example.ts.infrastructure.entity.LoanEntity;
 import com.example.ts.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,17 +85,17 @@ public class LoanController {
 
     /**
      * Borrowing a book
-     * @param userId the id of the user borrowing a book
-     * @param bookId the id of the borrowed book
+
      * @return ResponseEntity containing the loan that was created
      */
 //    @Secured("ROLE_READER")
     @PostMapping("/borrow")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> borrowBook(@RequestParam Integer userId, @RequestParam Integer bookId) {
+    public ResponseEntity<?> borrowBook(@RequestBody AddLoanDto addLoanDto) {
         try {
-            LoanEntity loan = loanService.borrowBook(userId, bookId);
-            return ResponseEntity.ok(loan);
+
+            loanService.borrowBook(addLoanDto);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to borrow book: " + e.getMessage());
         }

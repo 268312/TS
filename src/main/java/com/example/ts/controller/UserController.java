@@ -107,16 +107,16 @@ public class UserController {
      * @return ResponseEntity containing the loan
      */
 //    @Secured("ROLE_READER")
-    @PostMapping("/borrow/{userId}/{bookId}")
-    public ResponseEntity<?> borrowBook(@PathVariable Integer userId, @PathVariable Integer bookId) {
-        // Wywołaj serwis, aby pożyczyć książkę
-        LoanEntity loan = loanService.borrowBook(userId, bookId);
-        if (loan != null) {
-            return ResponseEntity.ok(loan);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Book not available for borrowing");
-        }
-    }
+//    @PostMapping("/borrow/{userId}/{bookId}")
+//    public ResponseEntity<?> borrowBook(@PathVariable Integer userId, @PathVariable Integer bookId) {
+//        // Wywołaj serwis, aby pożyczyć książkę
+//        LoanEntity loan = loanService.borrowBook(userId, bookId);
+//        if (loan != null) {
+//            return ResponseEntity.ok(loan);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Book not available for borrowing");
+//        }
+//    }
 
     /**
      * Returning a book
@@ -135,6 +135,8 @@ public class UserController {
     }
 
 
+
+
     /**
      * Retrieving loan history for a user
      * @param userId The id of the user
@@ -148,6 +150,15 @@ public class UserController {
             return ResponseEntity.ok(loanHistory);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get loan history: " + e.getMessage());
+        }
+    }
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllUsers(){
+        try {
+            List<UserEntity> users = userService.getAll();
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to retrieve users: " + e.getMessage());
         }
     }
 }

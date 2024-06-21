@@ -5,6 +5,8 @@ import com.example.ts.infrastructure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -28,4 +30,6 @@ public class UserService {
     public boolean existsByUsername(String name) {
         return userRepository.existsByName(name);
     }
+
+    public List<UserEntity> getAll() {return userRepository.findAll();}
 }

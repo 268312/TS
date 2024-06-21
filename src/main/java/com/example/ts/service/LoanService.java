@@ -1,5 +1,6 @@
 package com.example.ts.service;
 
+import com.example.ts.controller.dto.loan.AddLoanDto;
 import com.example.ts.infrastructure.entity.BookEntity;
 import com.example.ts.infrastructure.entity.LoanEntity;
 import com.example.ts.infrastructure.entity.UserEntity;
@@ -9,6 +10,7 @@ import com.example.ts.infrastructure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -33,7 +35,9 @@ public class LoanService {
         return loanRepository.save(loan);
     }
 
-    public LoanEntity borrowBook(Integer userId, Integer bookId) {
+    public LoanEntity borrowBook(AddLoanDto addLoanDto) {
+        Integer userId = addLoanDto.getUserId();
+        Integer bookId = addLoanDto.getBookId();
         UserEntity user = userRepository.findById(userId).orElse(null);
         if (user == null) {
             throw new IllegalArgumentException("User not found");
@@ -44,6 +48,11 @@ public class LoanService {
         BookEntity book = bookRepository.findById(bookId).orElse(null);
         // Ustawienie książki (bookId przekazywane z żądania)
         loan.setBook(book);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new java.util.Date(System.currentTimeMillis()));
+        calendar.add(Calendar.WEEK_OF_YEAR, 3); // Dodaje 3 tygodnie do daty wypożyczenia
+        Date dueDate = new Date(calendar.getTimeInMillis());
+        loan.setDueDate(dueDate);
         return loanRepository.save(loan);
     }
     public void returnBook(Integer loanId) {
