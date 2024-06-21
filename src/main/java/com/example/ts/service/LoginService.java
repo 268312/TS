@@ -10,6 +10,7 @@ import com.example.ts.infrastructure.repository.LoginRepository;
 import com.example.ts.infrastructure.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,6 +62,8 @@ public class LoginService {
 //        return loginRepository.save(user);
 //    }
 //}
+
+    @Transactional
     public RegisterResponseDto register(RegisterDto registerDto) throws Exception{
         LoginEntity existingLogin = loginRepository.findByUsername(registerDto.getUsername());
 
@@ -86,8 +89,9 @@ public class LoginService {
         if (!passwordEncoder.matches(loginDto.getPassword(), loginEntity.getPassword())) {
             throw new Exception("The password is incorrect");
         }
-        var token = jwtService.generateToken(loginEntity);
-        String role = loginEntity.getRole().toString();
-        return new LoginResponseDto(token, role);
+        String token = jwtService.generateToken(loginEntity);
+//        String role = loginEntity.getRole().toString();
+//        return new LoginResponseDto(token, role);
+        return new LoginResponseDto(token);
         }
     }

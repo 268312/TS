@@ -2,11 +2,11 @@ package com.example.ts.controller.dto;
 
 public class LoginResponseDto {
     private String token;
-    private String role;
+//    private String role;
 
-    public LoginResponseDto(String token, String role){
+    public LoginResponseDto(String token){
         this.token = token;
-        this.role = role;
+//        this.role = role;
     }
 
     public String getToken() {
@@ -17,11 +17,11 @@ public class LoginResponseDto {
         this.token = token;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
+//    public String getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
 }

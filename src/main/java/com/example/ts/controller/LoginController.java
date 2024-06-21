@@ -36,7 +36,7 @@ public class LoginController {
     @PreAuthorize("permitAll()")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto) throws Exception {
         LoginResponseDto dto = loginService.login(loginDto);
-        return new ResponseEntity<>(dto, HttpStatus.CREATED);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
 
     }
 

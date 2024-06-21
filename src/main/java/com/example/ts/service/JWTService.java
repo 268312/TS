@@ -17,7 +17,8 @@ import java.util.function.Function;
 
 @Service
 public class JWTService {
-    private long tokenLifetime = 3600 *1000;
+    private long tokenLifetime = 60*60*60 *1000;
+
     @Value("${jwt.token.key}")
     private static String key;
     public String generateToken(LoginEntity userDetails){
@@ -66,8 +67,9 @@ public class JWTService {
                 .compact();
     }
 
+    //nwm inaczej nie dziala jak do decode dam key
     private static SecretKey getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(key);
+        byte[] keyBytes = Decoders.BASE64.decode("825E42FC5BC32345C8655DC512FA7656349EB1E11943152E7CF5AB22E7");
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

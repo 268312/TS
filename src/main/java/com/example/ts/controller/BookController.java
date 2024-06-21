@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -48,6 +49,7 @@ public class BookController {
      * @return ResponseEntity containing a list of all books
      */
     @GetMapping("/getAll")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody ResponseEntity<?> getAllBooks(){
         try {
             Iterable<BookEntity> allBooks = bookService.getAllBooks();
