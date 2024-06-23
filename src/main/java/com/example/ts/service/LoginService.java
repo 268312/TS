@@ -96,4 +96,10 @@ public class LoginService {
         UserRole role = loginEntity.getRole();
         return role;
     }
+
+    public Integer getIdByUsername(String username){
+        LoginEntity loginEntity = loginRepository.findByUsername(username);
+        Integer id = loginEntity.getId();
+        return id;
+    }
     }

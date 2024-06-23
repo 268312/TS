@@ -49,6 +49,7 @@ public class SecurityConfig {
                                         .requestMatchers("/api/loan/all").hasRole("ADMIN")
                                         .requestMatchers("/api/loan/borrow").hasRole("ADMIN")
                                         .requestMatchers("/api/loan/return").permitAll()   //na razie
+                                        .requestMatchers("/api/loan/history").permitAll()
                                         //user
                                         .requestMatchers("/api/user/getAll").hasRole("ADMIN")
                                         .requestMatchers("/api/user/add").hasRole("ADMIN")

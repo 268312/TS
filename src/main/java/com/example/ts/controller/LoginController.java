@@ -40,6 +40,8 @@ public class LoginController {
         String username = loginDto.getUsername();
         UserRole role = loginService.getRoleByUsername(username);
         dto.setRole(role.toString());
+        Integer id = loginService.getIdByUsername(username);
+        dto.setId(id);
         return new ResponseEntity<>(dto, HttpStatus.OK);
 
     }
