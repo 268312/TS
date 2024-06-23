@@ -5,6 +5,7 @@ import com.example.ts.controller.dto.LoginResponseDto;
 import com.example.ts.controller.dto.RegisterDto;
 import com.example.ts.controller.dto.RegisterResponseDto;
 import com.example.ts.infrastructure.entity.LoginEntity;
+import com.example.ts.roles.UserRole;
 import com.example.ts.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,9 @@ public class LoginController {
     @PreAuthorize("permitAll()")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto) throws Exception {
         LoginResponseDto dto = loginService.login(loginDto);
+        String username = loginDto.getUsername();
+        UserRole role = loginService.getRoleByUsername(username);
+        dto.setRole(role.toString());
         return new ResponseEntity<>(dto, HttpStatus.OK);
 
     }

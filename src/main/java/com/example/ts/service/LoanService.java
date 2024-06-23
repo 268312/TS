@@ -1,12 +1,14 @@
 package com.example.ts.service;
 
 import com.example.ts.controller.dto.loan.AddLoanDto;
+import com.example.ts.controller.dto.loan.ReturnBookDto;
 import com.example.ts.infrastructure.entity.BookEntity;
 import com.example.ts.infrastructure.entity.LoanEntity;
 import com.example.ts.infrastructure.entity.UserEntity;
 import com.example.ts.infrastructure.repository.BookRepository;
 import com.example.ts.infrastructure.repository.LoanRepository;
 import com.example.ts.infrastructure.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Date;
@@ -55,18 +57,19 @@ public class LoanService {
         loan.setDueDate(dueDate);
         return loanRepository.save(loan);
     }
-    public void returnBook(Integer loanId) {
+    @Transactional
+    public LoanEntity returnBook(ReturnBookDto returnBookDto) {
         // Pobierz wypożyczenie
-        LoanEntity loan = loanRepository.findById(loanId).orElse(null);
-        if (loan == null) {
-            throw new IllegalArgumentException("Loan not found");
-        }
+        Integer loanId = returnBookDto.getLoanId();
+        LoanEntity loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new IllegalArgumentException("Loan not found"));
 
-        // Ustaw datę zwrotu na obecną
-        loan.setReturnDate(new Date(System.currentTimeMillis()));
+        loan.setReturnDate(new java.sql.Date(System.currentTimeMillis()));
+
+        loanRepository.save(loan);
 
         // Zapisz zmiany
-        loanRepository.save(loan);
+        return loanRepository.save(loan);
     }
 
     public List<LoanEntity> getLoanHistory(Integer userId) {

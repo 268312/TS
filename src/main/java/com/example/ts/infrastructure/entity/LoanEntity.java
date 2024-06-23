@@ -22,14 +22,14 @@ public class LoanEntity {
 
     @Basic
     @Column(name = "loan_date", nullable = false)
-    private Date loanDate;
+    private java.sql.Date loanDate;
 
     @Basic
     @Column(name = "due_date", nullable = false)
-    private Date dueDate;
+    private java.sql.Date dueDate;
     @Basic
     @Column(name = "return_date")
-    private Date returnDate;
+    private java.sql.Date returnDate;
 
 
     public Integer getId() {

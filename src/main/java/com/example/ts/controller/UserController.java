@@ -1,8 +1,10 @@
 package com.example.ts.controller;
 
+import com.example.ts.controller.dto.DeleteUserDto;
 import com.example.ts.infrastructure.entity.LoanEntity;
 import com.example.ts.infrastructure.entity.UserEntity;
 import com.example.ts.service.LoanService;
+import com.example.ts.service.LoginService;
 import com.example.ts.service.UserService;
 import com.example.ts.infrastructure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     private final UserService userService;
+    private final LoginService loginService;
 
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
@@ -36,9 +39,10 @@ public class UserController {
 //     * @param passwordEncoder The password encoder for encoding user passwords
      */
     @Autowired
-    public UserController(UserService userService, LoanService loanService) {
+    public UserController(UserService userService, LoanService loanService, LoginService loginService) {
         this.userService = userService;
         this.loanService = loanService;
+        this.loginService = loginService;
 //        this.passwordEncoder = passwordEncoder;
     }
 
@@ -63,15 +67,12 @@ public class UserController {
         }
     }
 
-    /**
-     * Deleting a user by id
-     * @param id The id of the user to delete
-     * @return ResponseEntity indicating the result of the deletion
-     */
+
 //    @Secured("ROLE_ADMIN")
-    @DeleteMapping("/delete/{id}")
-    public @ResponseBody ResponseEntity<?> deleteUser(@PathVariable Integer id){
+    @DeleteMapping("/delete")
+    public @ResponseBody ResponseEntity<?> deleteUser(@RequestBody DeleteUserDto deleteUserDto){
         try {
+            Integer id = deleteUserDto.getId();
             userService.delete(id);
             return ResponseEntity.ok().build();
         } catch (Exception e){
@@ -124,15 +125,15 @@ public class UserController {
      * @return ResponseEntity indicating the result of the return operation
      */
 //    @Secured("ROLE_READER")
-    @PostMapping("/return/{loanId}")
-    public ResponseEntity<?> returnBook(@PathVariable Integer loanId) {
-        try {
-            loanService.returnBook(loanId);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to return book: " + e.getMessage());
-        }
-    }
+//    @PostMapping("/return/{loanId}")
+//    public ResponseEntity<?> returnBook(@PathVariable Integer loanId) {
+//        try {
+//            loanService.returnBook(loanId);
+//            return ResponseEntity.ok().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to return book: " + e.getMessage());
+//        }
+//    }
 
 
 

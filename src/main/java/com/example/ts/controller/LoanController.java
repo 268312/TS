@@ -1,6 +1,7 @@
 package com.example.ts.controller;
 
 import com.example.ts.controller.dto.loan.AddLoanDto;
+import com.example.ts.controller.dto.loan.ReturnBookDto;
 import com.example.ts.infrastructure.entity.LoanEntity;
 import com.example.ts.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,14 +104,14 @@ public class LoanController {
 
     /**
      * Returning a book
-     * @param id id of the returned book
+     * @param returnBookDto id of the returned book
      * @return ResponseEntity indicating the result of the return
      */
 //    @Secured("ROLE_READER")
-    @DeleteMapping("/return/{id}")
-    public ResponseEntity<?> returnBook(@PathVariable Integer id) {
+    @PutMapping("/return")
+    public ResponseEntity<?> returnBook(@RequestBody ReturnBookDto returnBookDto) {
         try {
-            loanService.delete(id);
+            loanService.returnBook(returnBookDto);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to return book: " + e.getMessage());

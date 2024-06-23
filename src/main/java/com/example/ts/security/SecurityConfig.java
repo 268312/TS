@@ -41,15 +41,18 @@ public class SecurityConfig {
                                         .requestMatchers("/api/books/add").hasRole("ADMIN")
                                         .requestMatchers("/api/books/delete").permitAll()
                                         //auth
-                                        .requestMatchers("/auth/register").permitAll()
+                                        .requestMatchers("/auth/register").hasRole("ADMIN")
                                         .requestMatchers("/auth/login").permitAll()
                                         //
                                         .requestMatchers("/home").hasRole("ADMIN")
                                         //loans
                                         .requestMatchers("/api/loan/all").hasRole("ADMIN")
                                         .requestMatchers("/api/loan/borrow").hasRole("ADMIN")
+                                        .requestMatchers("/api/loan/return").permitAll()   //na razie
                                         //user
                                         .requestMatchers("/api/user/getAll").hasRole("ADMIN")
+                                        .requestMatchers("/api/user/add").hasRole("ADMIN")
+                                        .requestMatchers("/api/user/delete").permitAll()       //na razie
 
                 )
                 .sessionManagement(sessionManagement ->

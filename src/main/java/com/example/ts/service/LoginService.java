@@ -8,6 +8,7 @@ import com.example.ts.infrastructure.entity.LoginEntity;
 import com.example.ts.infrastructure.entity.UserEntity;
 import com.example.ts.infrastructure.repository.LoginRepository;
 import com.example.ts.infrastructure.repository.UserRepository;
+import com.example.ts.roles.UserRole;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.transaction.Transactional;
@@ -66,20 +67,16 @@ public class LoginService {
     @Transactional
     public RegisterResponseDto register(RegisterDto registerDto) throws Exception{
         LoginEntity existingLogin = loginRepository.findByUsername(registerDto.getUsername());
-
-//        if (existingLogin.isPresent()){
-//            throw new Exception("User already exists");
-//        }
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(registerDto.getEmail());
         userEntity.setName(registerDto.getUsername());
+        userEntity.setFullName(registerDto.getFullName());
         userRepository.save(userEntity);
         LoginEntity loginEntity = new LoginEntity();
         loginEntity.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         loginEntity.setUsername(registerDto.getUsername());
         loginEntity.setRole(registerDto.getRole());
         loginEntity.setUser(userEntity);
-
         loginRepository.save(loginEntity);
         return new RegisterResponseDto(userEntity.getId(), loginEntity.getUsername(), loginEntity.getRole());
     }
@@ -90,8 +87,13 @@ public class LoginService {
             throw new Exception("The password is incorrect");
         }
         String token = jwtService.generateToken(loginEntity);
-//        String role = loginEntity.getRole().toString();
-//        return new LoginResponseDto(token, role);
-        return new LoginResponseDto(token);
+        String role = loginEntity.getRole().toString();
+        return new LoginResponseDto(token, role);
+//        return new LoginResponseDto(token);
         }
+    public UserRole getRoleByUsername(String username){
+        LoginEntity loginEntity = loginRepository.findByUsername(username);
+        UserRole role = loginEntity.getRole();
+        return role;
+    }
     }
