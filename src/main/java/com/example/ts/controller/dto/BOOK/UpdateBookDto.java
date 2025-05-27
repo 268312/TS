@@ -1,30 +1,20 @@
 package com.example.ts.controller.dto.BOOK;
 
-public class GetBookDto {
-    private Integer id;
+public class UpdateBookDto {
+
     private String isbn;
+
     private String title;
+
     private String author;
+
     private String publisher;
+
     private Integer publishYear;
+
     private Integer availableCopies;
-    public GetBookDto() {}
-    public GetBookDto(Integer id, String isbn, String title, String author, String publisher, Integer publishYear, Integer availableCopies) {
-        this.id = id;
-        this.isbn = isbn;
-        this.title = title;
-        this.author = author;
-        this.publisher = publisher;
-        this.publishYear = publishYear;
-        this.availableCopies = availableCopies;
-    }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public UpdateBookDto() {
     }
 
     public String getIsbn() {
@@ -74,6 +64,4 @@ public class GetBookDto {
     public void setAvailableCopies(Integer availableCopies) {
         this.availableCopies = availableCopies;
     }
-
 }
-

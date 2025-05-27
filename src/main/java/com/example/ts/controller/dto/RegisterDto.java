@@ -9,6 +9,11 @@ public class RegisterDto {
     private String email;
     private String fullName;
 
+    public RegisterDto() {
+        // Jackson needs this
+    }
+
+
     public RegisterDto(String password, String username, UserRole role, String email, String fullName){
         this.password = password;
         this.username = username;

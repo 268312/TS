@@ -3,6 +3,7 @@ package com.example.ts.service;
 import com.example.ts.controller.dto.BOOK.GetBookDto;
 import com.example.ts.infrastructure.entity.BookEntity;
 import com.example.ts.infrastructure.repository.BookRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,4 +56,11 @@ public class BookService {
                 bookEntity.getPublishYear(),
                 bookEntity.getAvailableCopies());
     }
+    public BookEntity updateBook(BookEntity book) {
+        if (!bookRepository.existsById(book.getId())) {
+            throw new EntityNotFoundException("Book not found");
+        }
+        return bookRepository.save(book);
+    }
+
 }

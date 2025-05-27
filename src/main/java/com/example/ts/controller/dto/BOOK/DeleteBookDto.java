@@ -3,6 +3,8 @@ package com.example.ts.controller.dto.BOOK;
 public class DeleteBookDto {
     private Integer bookId;
 
+    public DeleteBookDto() {      // **publiczny konstruktor bezargumentowy**!
+    }
     public DeleteBookDto(Integer bookId) {
         this.bookId = bookId;
     }

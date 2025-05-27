@@ -37,22 +37,24 @@ public class SecurityConfig {
 //                                        .requestMatchers("/login").permitAll()     //kazdy moze dojsc do logowania
                                         //.requestMatchers("/book").hasRole("USER") //przykład
                                         //books
-                                        .requestMatchers("/api/books/getAll").permitAll()
-                                        .requestMatchers("/api/books/add").hasRole("ADMIN")
-                                        .requestMatchers("/api/books/delete").permitAll()
+//                                        .requestMatchers("/api/books/getAll").permitAll()
+//                                        .requestMatchers("/api/books/add").permitAll()
+//                                        .requestMatchers("/api/books/delete").permitAll()
+//                                        .requestMatchers("/api/books/update/").permitAll()
+                                        .requestMatchers("/api/books/**").permitAll()
                                         //auth
-                                        .requestMatchers("/auth/register").hasRole("ADMIN")
+                                        .requestMatchers("/auth/register").permitAll()
                                         .requestMatchers("/auth/login").permitAll()
                                         //
-                                        .requestMatchers("/home").hasRole("ADMIN")
+                                        .requestMatchers("/home").permitAll()
                                         //loans
                                         .requestMatchers("/api/loan/all").hasRole("ADMIN")
                                         .requestMatchers("/api/loan/borrow").hasRole("ADMIN")
                                         .requestMatchers("/api/loan/return").permitAll()   //na razie
                                         .requestMatchers("/api/loan/history").permitAll()
                                         //user
-                                        .requestMatchers("/api/user/getAll").hasRole("ADMIN")
-                                        .requestMatchers("/api/user/add").hasRole("ADMIN")
+                                        .requestMatchers("/api/user/getAll").permitAll()
+                                        .requestMatchers("/api/user/add").permitAll()
                                         .requestMatchers("/api/user/delete").permitAll()       //na razie
 
                 )
